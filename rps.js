@@ -11,61 +11,56 @@ function playerMove() {
 }
 
 function playRound(playerSelection, computerSelection) {
-  
-  if(playerSelection == computerSelection) {
-    return 0;
-  } else if(playerSelection == 'ROCK' && computerSelection == 'SCISSORS') {
-    return 1;
-  } else if(playerSelection == 'PAPER' && computerSelection == 'ROCK') {
-    return 1;
-  } else if(playerSelection == 'SCISSORS' && computerSelection == 'PAPER') {
-    return 1;
-  } else {
-    return 2;
-  }
-  if(currentRound == 0) {
-    return "You Tied!";
-  } else if(currentRound == 1) {
-    return `You Win! ${playerChoice} beats ${computerChoice}`;
-  } else if (currentRound == 2) {
-    return `You Lose! ${computerChoice} beats ${playerChoice}`;
+
+  switch(playerSelection) {
+    case 'ROCK':
+      if(computerSelection == 'ROCK') {
+        return "Tie!";
+      } else if(computerSelection == 'PAPER') {
+        return "Lose!";
+      } else if(computerSelection == 'SCISSORS') {
+        return "Win!";
+      };
+    case 'PAPER':
+      if(computerSelection == 'ROCK') {
+        return "Win!";
+      } else if(computerSelection == 'SCISSORS') {
+        return "Lose!";
+      } else if(computerSelection == 'PAPER') {
+        return "Tie!";
+      };
+    case 'SCISSORS':
+      if(computerSelection == 'PAPER') {
+        return "Win!";
+      } else if(computerSelection == 'ROCK') {
+        return "Lose!";
+      } else if(computerSelection == 'SCISSORS') {
+        return "Tie!";
+      }
   }
 }
 
 function game() {
   let wins = 0;
   let losses = 0;
-  let ties = 0;
-  
-  for(let x = 0; x < 5; x++) {
-    let playerChoice = playerMove();
-    let computerChoice = computerPlay();
-    let currentRound = playRound(playerChoice, computerChoice);
-    
-    switch(currentRound) {
-      case 0:
-        ties++;
-        break;
-      case 1:
-        wins++;
-        break;
-      case 2:
-        losses++;
-        break;
-      default:
-        break;
-    }
-    
+
+  for(let i = 0; i < 5; i++) {
+    let currentRound = playRound(playerMove(), computerPlay());
     console.log(currentRound);
-    console.log(wins);
-    console.log(losses);
-    console.log(ties);
+    if(currentRound == "Win!") {
+      wins += 1;
+    } else if(currentRound == "Lose!") {
+      losses += 1;
+    }
   }
-  if(wins == losses) {
-    return "You tied!";
-  } else if(wins > losses) {
-    return "You won!";
+  if(wins > losses) {
+    console.log('You beat the computer!');
+  } else if(losses > wins) {
+    console.log('The computer beat you!');
+  } else {
+    console.log('You tied with the computer!');
   }
+
 }
 
 game();
