@@ -5,11 +5,6 @@ function computerPlay() {
   return rockPaperScissors[randomChoice];
 }
 
-function playerMove() {
-  let move = window.prompt('ROCK, PAPER, OR SCISSORS');
-  return move.toUpperCase();
-}
-
 function playRound(playerSelection, computerSelection) {
 
   switch(playerSelection) {
@@ -44,15 +39,26 @@ function game() {
   let wins = 0;
   let losses = 0;
 
-  for(let i = 0; i < 5; i++) {
-    let currentRound = playRound(playerMove(), computerPlay());
-    console.log(currentRound);
-    if(currentRound == "Win!") {
-      wins += 1;
-    } else if(currentRound == "Lose!") {
-      losses += 1;
-    }
-  }
+  let paperBtn = document.createElement('button');
+  let paperTxt = document.createTextNode('Paper');
+  paperBtn.appendChild(paperTxt);
+
+  let rockBtn = document.createElement('button');
+  let rockTxt = document.createTextNode('Rock');
+  rockBtn.appendChild(rockTxt);
+
+  let scissorsBtn = document.createElement('button');
+  let scissorsTxt = document.createTextNode('Scissors');
+  scissorsBtn.appendChild(scissorsTxt);
+
+  document.body.appendChild(paperBtn);
+  document.body.appendChild(rockBtn);
+  document.body.appendChild(scissorsBtn);
+
+  paperBtn.addEventListener('click', playRound('PAPER', computerPlay()));
+  rockBtn.addEventListener('click', playRound('ROCK', computerPlay()));
+  scissorBtn.addEventListener('click', playRound('SCISSORS', computerPlay()));
+
   if(wins > losses) {
     console.log('You beat the computer!');
   } else if(losses > wins) {
@@ -60,6 +66,8 @@ function game() {
   } else {
     console.log('You tied with the computer!');
   }
+
+  let scoreboard = document.createElement('div');
 
 }
 
